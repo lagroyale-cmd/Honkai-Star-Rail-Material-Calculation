@@ -7,14 +7,12 @@
       energyPerRun, avgGreen, baseBlue, pChance, gPerB, bPerP
     } = cfg;
 
-    // Iterate runs upward until all requirements are met in expectation
     let runs = 0;
     while (true){
       const greens = avgGreen * runs;
       const surplusG = Math.max(0, greens - reqG);
       const blues = baseBlue * runs + (surplusG / gPerB);
 
-      // Amount of blues we must keep to satisfy B
       const keepB = Math.max(0, reqB);
       const surplusB = Math.max(0, blues - keepB);
 
@@ -23,12 +21,11 @@
       const pTotal = pDirect + pFromB;
 
       const gOK = greens >= reqG;
-      const bOK = blues >= reqB; // we only convert surplus after meeting B
+      const bOK = blues >= reqB;
       const pOK = pTotal >= reqP;
 
       if (gOK && bOK && pOK) break;
       runs++;
-      // fail-safe to avoid infinite loops if inputs are crazy
       if (runs > 1e6) throw new Error("Inputs too large");
     }
 
@@ -38,9 +35,8 @@
 
   function calcTime(totalEnergy, startEnergy, rechargePerHour){
     if (totalEnergy <= 0) return { days: 0, daily: rechargePerHour*24 };
-    const daily = rechargePerHour * 24; // 240/day default
+    const daily = rechargePerHour * 24;
     const rem = Math.max(0, totalEnergy - startEnergy);
-    // If we can finish entirely within starting energy → 1 day. Otherwise add days for recharges.
     const extraDays = Math.ceil(rem / daily);
     const totalDays = totalEnergy <= startEnergy ? 1 : (1 + extraDays);
     return { days: totalDays, daily };
@@ -69,7 +65,6 @@
 
     const { runs, energy } = calcRuns(reqP, reqB, reqG, cfg);
 
-    // Compute expected materials at the chosen runs
     const greens = cfg.avgGreen * runs;
     const surplusG = Math.max(0, greens - reqG);
     const blues = cfg.baseBlue * runs + (surplusG / cfg.gPerB);
@@ -80,8 +75,11 @@
 
     const time = calcTime(energy, cfg.startEnergy, cfg.rechargePerHour);
 
+    const fuelsNeeded = Math.ceil(energy / 60); // NEW: fuels calculation
+
     el('outRuns').textContent = format(runs);
     el('outEnergy').textContent = format(energy);
+    el('outFuels').textContent = format(fuelsNeeded); // NEW: output fuels
     el('outDaily').textContent = format(time.daily) + ' / day';
     el('outDays').textContent = format(time.days);
 
@@ -101,6 +99,6 @@
     document.getElementById('results').hidden = true;
   });
 
-  // Auto-calc once on load with defaults
   computeAndRender();
 })();
+
