@@ -1,0 +1,29 @@
+:root{
+  --bg:#0b1020; --fg:#e8ecf6; --muted:#a9b1c7; --card:#121833; --accent:#7aa2ff; --accent2:#8ef; --danger:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#0b1020,#111b3a);color:var(--fg);font:16px/1.5 system-ui,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+.container{max-width:1000px;margin:0 auto;padding:24px}
+h1{font-size:clamp(24px,3vw,36px);margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 16px}
+.card{background:var(--card);border:1px solid #1b254d;border-radius:16px;padding:16px 16px 8px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+h2{margin:0 0 12px}
+h3{margin:12px 0 8px;font-size:18px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:8px 0 0}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+label{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:14px}
+input{padding:10px 12px;border-radius:10px;border:1px solid #2a3a73;background:#0e1430;color:var(--fg)}
+input:focus{outline:2px solid var(--accent)}
+details{margin-top:12px}
+summary{cursor:pointer;color:var(--accent)}
+.actions{display:flex;gap:10px;margin-top:14px}
+button{padding:10px 16px;border-radius:12px;border:1px solid #2a3a73;background:linear-gradient(180deg,#1c2754,#16214a);color:var(--fg);cursor:pointer;font-weight:600}
+button:hover{filter:brightness(1.1)}
+button.ghost{background:transparent}
+.kv{list-style:none;padding:0;margin:8px 0}
+.kv li{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px dashed #2b376c}
+.kv li:last-child{border-bottom:0}
+strong{font-weight:700;color:var(--accent2)}
+.note{color:var(--muted);margin-top:8px}
+footer{margin-top:16px;color:var(--muted)}

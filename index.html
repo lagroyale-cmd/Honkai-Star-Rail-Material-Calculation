@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Material Farming Calculator</title>
+  <link rel="stylesheet" href="HSRmat.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Material Farming Calculator</h1>
+    <p class="sub">Drop rules per run (10 Energy): 1 Blue guaranteed, Green avg 1–2 (≈1.5), Purple chance 1/6. Conversions: 3 Green → 1 Blue, 3 Blue → 1 Purple.</p>
+
+    <section class="card">
+      <h2>Inputs</h2>
+      <div class="grid">
+        <label>Required Purple
+          <input id="reqP" type="number" min="0" value="0" />
+        </label>
+        <label>Required Blue
+          <input id="reqB" type="number" min="0" value="0" />
+        </label>
+        <label>Required Green
+          <input id="reqG" type="number" min="0" value="0" />
+        </label>
+      </div>
+
+      <details>
+        <summary>Advanced (drop rates, energy, recharge)</summary>
+        <div class="grid">
+          <label>Energy per run
+            <input id="energyPerRun" type="number" min="1" value="10" />
+          </label>
+          <label>Average Green per run
+            <input id="avgGreen" type="number" min="0" step="0.1" value="1.5" />
+          </label>
+          <label>Guaranteed Blue per run
+            <input id="baseBlue" type="number" min="0" step="0.1" value="1" />
+          </label>
+          <label>Purple drop chance per run (0–1)
+            <input id="pChance" type="number" min="0" max="1" step="0.001" value="0.1667" />
+          </label>
+          <label>Green→Blue (G per B)
+            <input id="gPerB" type="number" min="1" step="1" value="3" />
+          </label>
+          <label>Blue→Purple (B per P)
+            <input id="bPerP" type="number" min="1" step="1" value="3" />
+          </label>
+        </div>
+        <div class="grid">
+          <label>Starting energy (assume full if unsure)
+            <input id="startEnergy" type="number" min="0" value="300" />
+          </label>
+          <label>Max energy cap
+            <input id="capEnergy" type="number" min="1" value="300" />
+          </label>
+          <label>Recharge rate (energy/hour)
+            <input id="rechargePerHour" type="number" min="0" step="0.1" value="10" />
+          </label>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button id="calcBtn">Calculate</button>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+    </section>
+
+    <section class="card" id="results" hidden>
+      <h2>Results</h2>
+      <div class="grid two">
+        <div>
+          <h3>Runs & Energy</h3>
+          <ul class="kv">
+            <li><span>Runs needed:</span><strong id="outRuns">—</strong></li>
+            <li><span>Total energy:</span><strong id="outEnergy">—</strong></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Time (with recharge)</h3>
+          <ul class="kv">
+            <li><span>Daily recharge:</span><strong id="outDaily">—</strong></li>
+            <li><span>Total days:</span><strong id="outDays">—</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Expected Materials Produced</h3>
+      <ul class="kv">
+        <li><span>Greens:</span><strong id="outG">—</strong></li>
+        <li><span>Blues (incl. G→B before reserving B need):</span><strong id="outB">—</strong></li>
+        <li><span>Purple (direct only):</span><strong id="outPdirect">—</strong></li>
+        <li><span>Purple total (after using surplus Blues):</span><strong id="outPtotal">—</strong></li>
+      </ul>
+
+      <p class="note">Notes: This calculator uses <em>expected values</em> (averages). Real drops vary. Conversions spend only <em>surplus</em> after meeting your Green and Blue requirements.</p>
+    </section>
+
+    <footer>
+      <small>Made for quick planning. Tip: keep inputs whole numbers for simple planning.</small>
+    </footer>
+  </main>
+
+  <script src="HSRmat.js"></script>
+</body>
+</html>
